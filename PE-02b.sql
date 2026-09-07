@@ -1,3 +1,8 @@
+-- PE 02b
+-- Gabriel Arias
+-- September 7th, 2026
+-- ISTE 534 - Data Warehousing
+
 CREATE SCHEMA IF NOT EXISTS dw;
 USE dw;
 
@@ -30,8 +35,7 @@ CREATE TABLE dim_customer (
     city                VARCHAR(45),
     state               CHAR(2),
     customer_type_desc  VARCHAR(45),
-    PRIMARY KEY (customer_sk),
-    INDEX ix_cust_nk (customer_id, is_current) -- natural key
+    PRIMARY KEY (customer_sk)
 );
 
 -- ============================================
@@ -43,8 +47,7 @@ CREATE TABLE dim_product (
     product_name    VARCHAR(45),
     unit_price      DECIMAL(10,2),
     category_desc   VARCHAR(45),
-    PRIMARY KEY (product_sk),
-    INDEX ix_prod_bk (product_id, is_current)
+    PRIMARY KEY (product_sk)
 );
 
 -- ============================================
@@ -59,9 +62,7 @@ CREATE TABLE fact_sales (
     PRIMARY KEY (date_sk, customer_sk, product_sk),
     FOREIGN KEY (date_sk)     REFERENCES dim_date(date_sk),
     FOREIGN KEY (customer_sk) REFERENCES dim_customer(customer_sk),
-    FOREIGN KEY (product_sk)  REFERENCES dim_product(product_sk),
-    INDEX ix_fact_prod (product_sk),
-    INDEX ix_fact_cust (customer_sk)
+    FOREIGN KEY (product_sk)  REFERENCES dim_product(product_sk)
 );
 
 SHOW TABLES;
